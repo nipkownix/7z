@@ -34,7 +34,7 @@ image:
 - Visual Studio 2019
 install:
 - cmd: >-
-    if /i "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" (call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64)
+    if /i "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" (call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86)
 
 # Build script
 #
@@ -43,19 +43,8 @@ build_script:
   - cd CPP/7zip
   - nmake
   - cd ../..
-  - cp CPP/7zip/Bundles/Alone/x64/7za.exe .
+  - cp CPP/7zip/Bundles/Alone/x86/7za.exe .
   - ls
 
 artifacts:
   - path: 7za.exe
-
-deploy:
-  - provider: GitHub
-    artifact: 7za.exe
-    draft: false
-    prerelease: false
-    auth_token:
-      secure: W5JGLPCxhmfcrS3+vSZI7BiIUfQ57NPOo08uymwWyN8gpWj5gR7S9pWwUAidWbya
-    on:
-      branch: master                # release from master branch only
-      APPVEYOR_REPO_TAG: true       # deploy on tag push only
